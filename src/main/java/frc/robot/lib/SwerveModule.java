@@ -5,4 +5,8 @@
 package frc.robot.lib;
 
 /** Add your docs here. */
-public class SwerveModule {}
+public class SwerveModule {
+    public SwerveModule(SwerveData _data){
+        
+    }
+}
