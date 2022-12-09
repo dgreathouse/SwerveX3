@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.commands.ChassisDefaultCommand;
+import frc.robot.subsystems.Chassis;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -17,11 +19,15 @@ import edu.wpi.first.wpilibj2.command.Command;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-
+  public static Chassis chassis = new Chassis();
+  private ChassisDefaultCommand chassisDefaultCommand = new ChassisDefaultCommand(chassis);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    // Set the default commands for the subsystems
+    chassis.setDefaultCommand(chassisDefaultCommand);
     // Configure the button bindings
     configureButtonBindings();
+
   }
 
   /**

@@ -5,11 +5,15 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.Chassis;
 
 public class ChassisDefaultCommand extends CommandBase {
+  Chassis m_chassis;
   /** Creates a new ChassisDefaultCommand. */
-  public ChassisDefaultCommand() {
-    // Use addRequirements() here to declare subsystem dependencies.
+
+  public ChassisDefaultCommand(Chassis _subsystem) {
+    addRequirements(_subsystem);
+    m_chassis = _subsystem;
   }
 
   // Called when the command is initially scheduled.
