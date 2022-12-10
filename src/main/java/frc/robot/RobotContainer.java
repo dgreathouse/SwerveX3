@@ -22,6 +22,10 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   public static Chassis chassis = new Chassis();
   private ChassisDefaultCommand chassisDefaultCommand = new ChassisDefaultCommand(chassis);
+
+  public static XboxController m_controllerDriver = new XboxController(0);
+  public static XboxController m_controllerOperator = new XboxController(1);
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Set the default commands for the subsystems

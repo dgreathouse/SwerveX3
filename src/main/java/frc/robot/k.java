@@ -23,8 +23,17 @@ public class k {
         public static SwerveData LFData = new SwerveData("LF", 14, InvertType.None, 10, InvertType.InvertMotorOutput, 3, 41);
         public static SwerveData RFData = new SwerveData("RF", 16, InvertType.InvertMotorOutput, 12, InvertType.InvertMotorOutput, 5, 230);
         public static SwerveData BData = new SwerveData("B", 15, InvertType.InvertMotorOutput, 11, InvertType.InvertMotorOutput, 4, 153);
+        public static final double steerMax_RadPS = 10.826;
+
+        public static final double driveMax_MPS = 15.93;
+        public static final double driveRawVelocityToMPS = 5036.82;
+        public static final double driveDistanceCntsPMeter = 50368.2;
+
+
     }
     public static class CHASSIS {
+        public static final double angularMax_RadPS = 1.0; // TODO: calculate Max Velocity in Radians/Sec from sysid
+        public static final double angularMax_RadPSS = 1.0; // TODO: calculate Max Accelleration in Radians/Sec^2
         // See Constants spreadsheet for calculation of values
         public static SwerveDriveKinematics kinematics = new SwerveDriveKinematics(
             new Translation2d(0.1257, 0.235), // Front Left
