@@ -16,6 +16,8 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.ProfiledPIDCommand;
 import frc.robot.k;
 
@@ -25,7 +27,7 @@ public class SwerveModule {
     WPI_TalonFX m_driveMot;
     WPI_TalonFX m_steerMot;
     CANCoder m_swerveEncoder;
-
+    SwerveData m_data;
     private PIDController m_drivePidController = new PIDController(1, 0, 0);
     private ProfiledPIDController m_steerPIDController = 
         new ProfiledPIDController(0, 0, 0, 
@@ -35,6 +37,7 @@ public class SwerveModule {
     private SimpleMotorFeedforward m_steerFeedforward = new SimpleMotorFeedforward(1, 0.5,0);
 
     public SwerveModule(SwerveData _data){
+        m_data = _data;
         m_driveMot = new WPI_TalonFX(_data.driveCANID);
         m_steerMot = new WPI_TalonFX(_data.steerCANID);
         m_swerveEncoder = new CANCoder(_data.canCoderCANID);
@@ -71,14 +74,22 @@ public class SwerveModule {
         final double velocity = vel1 / k.SWERVE.driveRawVelocityToMPS;
         return velocity;
     }
+    public double getSteerAngle(){
+        return m_steerMot.getSelectedSensorPosition() / k.SWERVE.steer_CntsPRad;
+    }
+    public double getSteerVelocity(){
+        return m_steerMot.getSelectedSensorVelocity() / k.SWERVE.steerVelRatio;
+        
+    }
+    
     /**
      * 
      * @return Angle in Radians of steer motor
      */
-    public double getSteerAngle(){
+    public double getSwerveAngle(){
         return Math.toRadians(m_swerveEncoder.getAbsolutePosition());
-        
     }
+
     public SwerveModulePosition getPosition() {
         return new SwerveModulePosition(getDriveDistance(), new Rotation2d(getSteerAngle()));
     }
@@ -91,9 +102,15 @@ public class SwerveModule {
 
         // Calculate the turning motor output from the turning PID controller.
         double steerOutput = m_steerPIDController.calculate(getSteerAngle(), state.angle.getRadians());
-        double steerFeedForward = m_steerFeedforward.calculate(m_steerPIDController.getSetpoint().velocity);
+        double steerFeedforward = m_steerFeedforward.calculate(m_steerPIDController.getSetpoint().velocity);
 
+        SmartDashboard.putNumber(m_data.name + "_SFF",steerFeedforward);
+        SmartDashboard.putNumber(m_data.name + "_DFF",driveFeedforward);
+        SmartDashboard.putNumber(m_data.name + "_SPIDOut",steerOutput);
+        SmartDashboard.putNumber(m_data.name + "_DPIDOut",driveOutput);
+        SmartDashboard.putNumber("Batt", RobotController.getBatteryVoltage());
+        
         m_driveMot.setVoltage(driveOutput + driveFeedforward);
-        m_steerMot.setVoltage(steerOutput + steerFeedForward);
+        m_steerMot.setVoltage(steerOutput + steerFeedforward);
     }
 }

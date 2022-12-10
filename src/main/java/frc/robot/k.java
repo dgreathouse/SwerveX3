@@ -24,6 +24,9 @@ public class k {
         public static SwerveData RFData = new SwerveData("RF", 16, InvertType.InvertMotorOutput, 12, InvertType.InvertMotorOutput, 5, 230);
         public static SwerveData BData = new SwerveData("B", 15, InvertType.InvertMotorOutput, 11, InvertType.InvertMotorOutput, 4, 153);
         public static final double steerMax_RadPS = 10.826;
+        public static final double steerMax_UPS = 21777.0;
+        public static final double steerVelRatio = steerMax_UPS / steerMax_RadPS;
+        public static final double steer_CntsPRad = 5028.9;
 
         public static final double driveMax_MPS = 15.93;
         public static final double driveRawVelocityToMPS = 5036.82;
