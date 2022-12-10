@@ -33,7 +33,7 @@ public class SwerveModule {
         new ProfiledPIDController(0, 0, 0, 
         new TrapezoidProfile.Constraints(k.CHASSIS.angularMax_RadPS, k.CHASSIS.angularMax_RadPSS));
 
-    private SimpleMotorFeedforward m_driveFeedforward = new SimpleMotorFeedforward(1, 3, 0);
+    private SimpleMotorFeedforward m_driveFeedforward = new SimpleMotorFeedforward(.55, .00005, 0);
     private SimpleMotorFeedforward m_steerFeedforward = new SimpleMotorFeedforward(1, 0.5,0);
 
     public SwerveModule(SwerveData _data){
