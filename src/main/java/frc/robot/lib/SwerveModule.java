@@ -31,10 +31,10 @@ public class SwerveModule {
     private PIDController m_drivePidController = new PIDController(1, 0, 0);
     private ProfiledPIDController m_steerPIDController = 
         new ProfiledPIDController(0, 0, 0, 
-        new TrapezoidProfile.Constraints(k.CHASSIS.angularMax_RadPS, k.CHASSIS.angularMax_RadPSS));
+        new TrapezoidProfile.Constraints(k.SWERVE.steerMax_RadPS, k.SWERVE.steerMax_RadPSSq));
 
-    private SimpleMotorFeedforward m_driveFeedforward = new SimpleMotorFeedforward(.55, .00005, 0);
-    private SimpleMotorFeedforward m_steerFeedforward = new SimpleMotorFeedforward(1, 0.5,0);
+    private SimpleMotorFeedforward m_driveFeedforward = new SimpleMotorFeedforward(k.SWERVE.driveKs, k.SWERVE.driveKv, 0);
+    private SimpleMotorFeedforward m_steerFeedforward = new SimpleMotorFeedforward(0.001, 0.5,0);
 
     public SwerveModule(SwerveData _data){
         m_data = _data;
@@ -76,6 +76,7 @@ public class SwerveModule {
     }
     public double getSteerAngle(){
         return m_steerMot.getSelectedSensorPosition() / k.SWERVE.steer_CntsPRad;
+        
     }
     public double getSteerVelocity(){
         return m_steerMot.getSelectedSensorVelocity() / k.SWERVE.steerVelRatio;
