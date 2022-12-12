@@ -4,7 +4,6 @@
 
 package frc.robot.lib;
 
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.sensors.AbsoluteSensorRange;
 import com.ctre.phoenix.sensors.CANCoder;
@@ -18,7 +17,7 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.ProfiledPIDCommand;
+
 import frc.robot.k;
 
 /** Add your docs here. */
@@ -28,13 +27,13 @@ public class SwerveModule {
     WPI_TalonFX m_steerMot;
     CANCoder m_swerveEncoder;
     SwerveData m_data;
-    private PIDController m_drivePidController = new PIDController(1, 0, 0);
+    private PIDController m_drivePidController = new PIDController(.01, 0.001, 0);
     private ProfiledPIDController m_steerPIDController = 
-        new ProfiledPIDController(0, 0, 0, 
+        new ProfiledPIDController(0.01, 0.001, 0, 
         new TrapezoidProfile.Constraints(k.SWERVE.steerMax_RadPS, k.SWERVE.steerMax_RadPSSq));
 
     private SimpleMotorFeedforward m_driveFeedforward = new SimpleMotorFeedforward(k.SWERVE.driveKs, k.SWERVE.driveKv, 0);
-    private SimpleMotorFeedforward m_steerFeedforward = new SimpleMotorFeedforward(0.001, 0.5,0);
+    private SimpleMotorFeedforward m_steerFeedforward = new SimpleMotorFeedforward(k.SWERVE.steerKs, k.SWERVE.driveKv,0);
 
     public SwerveModule(SwerveData _data){
         m_data = _data;
