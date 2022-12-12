@@ -28,7 +28,10 @@ public class k {
         public static final double steerMax_UPS = 21777.0;
         public static final double steerVelRatio = steerMax_UPS / steerMax_RadPS;
         public static final double steer_CntsPRad = 5028.9;
-
+        
+        public static final double steerKv = CHASSIS.maxBatteryVoltage / steerMax_RadPS;
+        public static final double steerKs = 0.25;
+        
         
         public static final double driveMax_MPS = 4.3235;
         public static final double driveMax_MPSSq = driveMax_MPS * 1/0.25;
